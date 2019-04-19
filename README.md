@@ -1,8 +1,8 @@
 # EasyOCRGenerator
 
-EasyOCRGenerator is a tools to generate OCR dataset for optical character recognition.
+EasyOCRGenerator is a tools to generate OCR dataset for optical
+character recognition.
 
-### Included modules
 #### Generator
 1. Malaysia license plate
 2. Philippine license plate **(TODO)**
@@ -17,7 +17,17 @@ EasyOCRGenerator is a tools to generate OCR dataset for optical character recogn
 2. Color Inversion
 3. Salt & Pepper
 4. Singularity: Double line plate Slicer
+
+#### Notebook
+There are logic behind this generator is briefly describe in
+`TightPlateGeneration.ipynb`
+
 ### Dependencies
+- OpenCV
+- numpy
+- [imgaug](https://gist.github.com/adamjohnson/5682757)
+- pillow
+- argparse
 
 ## Malaysia License Plate
 Road Transport Department Malaysia (JPJ) issues various plate layout as below:

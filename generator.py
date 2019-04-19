@@ -1,15 +1,9 @@
 import glob
-import sys
 import os
 import argparse
 import cv2
 import random
-import multiprocessing
-import numpy as np
-import numpy.random as rand
-from PIL import ImageFont, ImageDraw, Image
 
-from generators import lexicon_word
 from generators import nonlexicon_word
 from generators import license_plate
 from generators import image_gen
