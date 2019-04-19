@@ -45,11 +45,11 @@ class LicensePlate(object):
         return char
 
     def special(self,):
-        special = str(self.dict[np.random.randint(62, 93)])
+        special = str(self.dict[np.random.randint(63, 109)])
         return special
 
     def limo__(self,):
-        limo = str(self.dict[np.random.randint(93, 94)])
+        limo = str(self.dict[np.random.randint(109, 110)])
         return limo
 
     def digits(self, num):
