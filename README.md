@@ -68,8 +68,7 @@ layout with balance character distribution.
 **Example**
 
 ```
-python3 generator.py --number 1000 --mode my_plate --pers_trans on 
---augment on --single_line on --save_dir /home/user/my_plate/
+python3 generator.py --number 1000 --mode my_plate --pers_trans on --augment on --single_line on --save_dir /home/user/my_plate/
 ```
 #### Plate Imitator
 This will read the real license plate image with groundtruth as file
@@ -86,8 +85,7 @@ name and generate the synthetic version of them.
 
 **Example**
 ```
-python3 imitator_my_plate.py --imitatee_dir /home/user/real_plate/ --pers_trans on 
---augment on --single_line on --save_dir /home/user/my_plate/
+python3 imitator_my_plate.py --imitatee_dir /home/user/real_plate/ --pers_trans on --augment on --single_line on --save_dir /home/user/my_plate/
 ```
 
 ### TODO
