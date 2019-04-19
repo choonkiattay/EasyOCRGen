@@ -1,0 +1,56 @@
+import glob
+import os
+import argparse
+import cv2
+import random
+from utils import augmentation
+from utils import singularity
+from generators import image_gen
+
+
+def init_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--imitatee_dir', type=str, help='Full path to imitatee directory, '
+                        'Please include "/" at EOL')
+    parser.add_argument('--pers_trans', type=str, help='on, off')
+    parser.add_argument('--augment', type=str, help='on, off')
+    parser.add_argument('--single_line', type=str, help='on, off')
+    parser.add_argument('--save_dir', type=str, help='Full path to save directory, '
+                        'Please include "/" at EOL')
+
+    return parser.parse_args()
+
+
+def imitator(imitatee_dir, pers_trans, augment, single_line, save_dir):
+    plate_ninja = singularity.Singularity()
+    plate_aug = augmentation.Augmenters()
+    imitatee=[]
+    img_gen = image_gen.ImageGenerator(save_dir)
+    for imitatee_file in glob.glob(os.path.join(imitatee_dir, '*.jpg')):
+        imitatee_name = imitatee_file.split('/')[-1].split('.')[0].split('_')[-1]
+        imitatee.append(imitatee_name)
+    print(imitatee)
+    print("\n{}".format(len(imitatee)))
+    img_gen.plate_image(imitatee, pers_trans)
+    for n, image in enumerate(sorted(glob.glob(os.path.join(save_dir, '*.jpg')))):
+        print('Postprocessing: {}'.format(n - 1), end='\r')
+        # print('Still going Be patient')
+        img = cv2.imread(image)
+        if single_line == 'on':
+            img = plate_ninja.vlp_singularity(img)
+        if augment == 'on':
+            augmenter = [plate_aug.invert_color(img), plate_aug.salt_pepper(img)]
+            img = random.choice(augmenter)
+        cv2.imwrite(image, img)
+    print('Done Postprocessing          ')
+
+
+if __name__ == '__main__':
+    args = init_args()
+    if not os.path.exists(args.save_dir):
+        imitator(imitatee_dir=args.imitatee_dir, pers_trans=args.pers_trans, augment=args.augment,
+                 single_line=args.single_line, save_dir=args.save_dir)
+    else:
+        print('Destination directory exists. Please choose new directory')
+
+
