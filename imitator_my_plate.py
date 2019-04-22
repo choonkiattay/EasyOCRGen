@@ -28,6 +28,11 @@ def imitator(imitatee_dir, pers_trans, augment, single_line, save_dir):
     img_gen = image_gen.ImageGenerator(save_dir)
     for imitatee_file in glob.glob(os.path.join(imitatee_dir, '*.jpg')):
         imitatee_name = imitatee_file.split('/')[-1].split('.')[0].split('_')[-1]
+        for index, character in enumerate(imitatee_name):
+            print('replace')
+            if character.isdigit():
+                imitatee_name = imitatee_name[:index] + ' ' + imitatee_name[index:]
+                break
         imitatee.append(imitatee_name)
     print(imitatee)
     print("\n{}".format(len(imitatee)))
