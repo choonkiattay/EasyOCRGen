@@ -22,6 +22,7 @@ def init_args():
     parser.add_argument('--single_line', type=str, help='on, off')
     parser.add_argument('--save_dir', type=str, help='Full path to save directory, '
                         'Please include "/" at EOL')
+    parser.print_help()
 
     return parser.parse_args()
 
