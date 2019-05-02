@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 
-class ImagePreprocess():
+class ImagePreprocess(object):
 
     def __init__(self):
         print("Image Pre-process Engine ... Checked")

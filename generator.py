@@ -9,6 +9,7 @@ from generators import license_plate
 from generators import image_gen
 from utils import singularity
 from utils import augmentation
+from utils import image_preprocess
 
 
 def init_args():
@@ -17,6 +18,7 @@ def init_args():
     parser.add_argument('--mode', type=str, help='lex, nonlex, my_plate')
     parser.add_argument('--pers_trans', type=str, help='on, off')
     parser.add_argument('--augment', type=str, help='on, off')
+    parser.add_argument('--grayscale', type=str, help='on, off')
     parser.add_argument('--single_line', type=str, help='on, off')
     parser.add_argument('--save_dir', type=str, help='Full path to save directory, '
                         'Please include "/" at EOL')
@@ -24,7 +26,7 @@ def init_args():
     return parser.parse_args()
 
 
-def generator(numbers, mode, pers_trans, augment, single_line, save_dir):
+def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_dir):
     number = numbers
     # lex_gen = lexicon_word.LexiconWords(number)
     # TODO: Solves lexicon words issue
@@ -33,6 +35,7 @@ def generator(numbers, mode, pers_trans, augment, single_line, save_dir):
     img_gen = image_gen.ImageGenerator(save_dir)
     plate_ninja = singularity.Singularity()
     plate_aug = augmentation.Augmenters()
+    img_preproc = image_preprocess.ImagePreprocess()
     if mode == 'lex':
         lex_words = lex_gen.generate_words()
         print("**Lexicon Word**\n", lex_words)
@@ -56,6 +59,8 @@ def generator(numbers, mode, pers_trans, augment, single_line, save_dir):
             if augment == 'on':
                 augmenter = [plate_aug.invert_color(img), plate_aug.salt_pepper(img)]
                 img = random.choice(augmenter)
+            if grayscale == 'on':
+                img = img_preproc.gray(img)
             cv2.imwrite(image, img)
         print('Done Postprocessing          ')
 
@@ -67,7 +72,7 @@ if __name__ == '__main__':
     if not os.path.exists(args.save_dir):
         # Single Thread
         generator(numbers=args.numbers, mode=args.mode, pers_trans=args.pers_trans, augment=args.augment,
-                  single_line=args.single_line, save_dir=args.save_dir)
+                  grayscale=args.grayscale, single_line=args.single_line, save_dir=args.save_dir)
     else:
         print('Destination directory exists. Please choose new directory')
 
