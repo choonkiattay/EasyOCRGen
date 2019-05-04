@@ -89,6 +89,6 @@ python3 imitator_my_plate.py --imitatee_dir /home/user/real_plate/ --pers_trans 
 ```
 
 ### TODO
-- Lexicon word generation
+- Lexicon Word Font & background -> license plate style 
 - Non lexicon word generation
 - Philippine Plate
