@@ -5,6 +5,7 @@ import cv2
 import random
 
 from generators import nonlexicon_word
+from generators import lexicon_word
 from generators import license_plate
 from generators import image_gen
 from utils import singularity
@@ -29,7 +30,7 @@ def init_args():
 
 def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_dir):
     number = numbers
-    # lex_gen = lexicon_word.LexiconWords(number)
+    lex_gen = lexicon_word.LexiconWords(number)
     # TODO: Solves lexicon words issue
     nonlex_gen = nonlexicon_word.NonlexiconWord(number)
     plate_gen = license_plate.LicensePlate(number)
