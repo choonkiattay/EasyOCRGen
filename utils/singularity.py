@@ -12,6 +12,7 @@ class Singularity(object):
             plate_H, plate_W, plate_C = plate_img.shape
             if plate_W and plate_H > 0:
                 if plate_W/plate_H < 2.0:
+                    # TODO: Solves double line cut problem by contour
                     ocr_img = self.img_prep.concat(plate_img, plate_H, plate_W, plate_C)
                 else:
                     ocr_img = plate_img

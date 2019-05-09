@@ -31,7 +31,6 @@ def init_args():
 def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_dir):
     number = numbers
     lex_gen = lexicon_word.LexiconWords(number)
-    # TODO: Solves lexicon words issue
     nonlex_gen = nonlexicon_word.NonlexiconWord(number)
     plate_gen = license_plate.LicensePlate(number)
     img_gen = image_gen.ImageGenerator(save_dir)
@@ -41,8 +40,8 @@ def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_d
     if mode == 'lex':
         lex_words = lex_gen.generate_words()
         print("**Lexicon Word**\n", lex_words)
-        img_gen.lex_image(lex_words)
-        # TODO: Lexicon words gen panda web crawler
+        img_gen.lex_image(lex_words, pers_trans)
+
     elif mode == 'nonlex':
         nonlex_word = nonlex_gen.generate_words()
         print("**Non-Lexicon Word**\n", nonlex_word)

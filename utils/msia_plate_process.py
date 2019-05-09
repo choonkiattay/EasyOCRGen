@@ -14,7 +14,15 @@ class MsiaVLPProcessing(object):
         imgray = cv2.cvtColor(roi_img, cv2.COLOR_BGR2GRAY)
         ret, thresh = cv2.threshold(imgray, 127, 255, cv2.THRESH_BINARY)
         contours, hierachy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        return contours
 
+    def erode_contours(self, img):
+        kernel = np.ones((5, 5), np.uint8)
+        roi_img = cv2.erode(img, kernel, iterations=10)
+
+        imgray = cv2.cvtColor(roi_img, cv2.COLOR_BGR2GRAY)
+        ret, thresh = cv2.threshold(imgray, 127, 255, cv2.THRESH_BINARY)
+        contours, hierachy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         return contours
 
     def contour_hunter(self, contours):
