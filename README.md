@@ -20,7 +20,7 @@ character recognition.
 
 #### Notebook
 There are logic behind this generator is briefly describe in
-`TightPlateGeneration.ipynb`
+`TightPlateGeneration.ipynb`. Singularity research is unfinished.
 
 ### Dependencies
 - OpenCV
@@ -92,3 +92,8 @@ python3 imitator_my_plate.py --imitatee_dir /home/user/real_plate/ --pers_trans 
 - Lexicon Word Font & background -> license plate style 
 - Non lexicon word generation
 - Philippine Plate
+
+### SideNote
+- Singularity research using image processing is not robust at the
+  moment. Fall back to image ratio method. 
+- Double line license plate generation is blocked now
