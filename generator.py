@@ -28,7 +28,11 @@ def init_args():
     return parser.parse_args()
 
 
+<<<<<<< HEAD
+def generator(numbers, mode, save_dir, pers_trans='off', augment='off', grayscale='off', single_line='off'):
+=======
 def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_dir):
+>>>>>>> cef326851f4ec4923e2abf3c6758d468f8c52294
     number = numbers
     lex_gen = lexicon_word.LexiconWords(number)
     nonlex_gen = nonlexicon_word.NonlexiconWord(number)
@@ -71,9 +75,16 @@ def generator(numbers, mode, pers_trans, augment, grayscale, single_line, save_d
 if __name__ == '__main__':
     args = init_args()
     if not os.path.exists(args.save_dir):
+<<<<<<< HEAD
+        # TODO: Make multithreaded if certain number of images to be generated
+        # Single Thread
+        generator(numbers=args.numbers, mode=args.mode, save_dir=args.save_dir, pers_trans=args.pers_trans, augment=args.augment,
+                  grayscale=args.grayscale, single_line=args.single_line)
+=======
         # Single Thread
         generator(numbers=args.numbers, mode=args.mode, pers_trans=args.pers_trans, augment=args.augment,
                   grayscale=args.grayscale, single_line=args.single_line, save_dir=args.save_dir)
+>>>>>>> cef326851f4ec4923e2abf3c6758d468f8c52294
     else:
         print('Destination directory exists. Please choose new directory')
 
