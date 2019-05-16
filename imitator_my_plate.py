@@ -47,7 +47,8 @@ def imitator(imitatee_dir, pers_trans, augment, grayscale, single_line, save_dir
         if single_line == 'on':
             img = plate_ninja.vlp_singularity(img)
         if augment == 'on':
-            augmenter = [plate_aug.invert_color(img), plate_aug.salt_pepper(img)]
+            augmenter = [plate_aug.invert_color(img), plate_aug.salt_pepper(img), plate_aug.random_resize(img),
+                         plate_aug.plate_blur(img)]
             img = random.choice(augmenter)
         if grayscale == 'on':
                 img = img_preproc.gray(img)
@@ -58,8 +59,8 @@ def imitator(imitatee_dir, pers_trans, augment, grayscale, single_line, save_dir
 if __name__ == '__main__':
     args = init_args()
     if not os.path.exists(args.save_dir):
-        imitator(imitatee_dir=args.imitatee_dir, pers_trans=args.pers_trans, augment=args.augment,
-                 grayscale=args.grayscale, single_line=args.single_line, save_dir=args.save_dir)
+        imitator(imitatee_dir=args.imitatee_dir, save_dir=args.save_dir, pers_trans=args.pers_trans,
+                 augment=args.augment, grayscale=args.grayscale, single_line=args.single_line)
     else:
         print('Destination directory exists. Please choose new directory')
 
