@@ -10,7 +10,7 @@ from generators import license_plate
 from generators import image_gen
 from utils import singularity
 from utils import augmentation
-from utils import image_preprocess
+from utils import image_postprocess
 
 
 def init_args():
@@ -21,6 +21,7 @@ def init_args():
     parser.add_argument('--augment', type=str, help='on, off')
     parser.add_argument('--grayscale', type=str, help='on, off')
     parser.add_argument('--single_line', type=str, help='on, off')
+    parser.add_argument('--dimension_pad', type=str, help='on, off')
     parser.add_argument('--save_dir', type=str, help='Full path to save directory, '
                         'Please include "/" at EOL')
     parser.print_help()
@@ -28,7 +29,8 @@ def init_args():
     return parser.parse_args()
 
 
-def generator(numbers, mode, save_dir, pers_trans='off', augment='off', grayscale='off', single_line='off'):
+def generator(numbers, mode, save_dir, pers_trans='off', augment='off', grayscale='off', single_line='off',
+              dimension_pad='off'):
     number = numbers
     lex_gen = lexicon_word.LexiconWords(number)
     nonlex_gen = nonlexicon_word.NonlexiconWord(number)
@@ -36,7 +38,7 @@ def generator(numbers, mode, save_dir, pers_trans='off', augment='off', grayscal
     img_gen = image_gen.ImageGenerator(save_dir)
     plate_ninja = singularity.Singularity()
     plate_aug = augmentation.Augmenters()
-    img_preproc = image_preprocess.ImagePreprocess()
+    img_postproc = image_postprocess.ImagePostprocess()
     if mode == 'lex':
         lex_words = lex_gen.generate_words()
         print("**Lexicon Word**\n", lex_words)
@@ -57,12 +59,14 @@ def generator(numbers, mode, save_dir, pers_trans='off', augment='off', grayscal
             img = cv2.imread(image)
             if single_line == 'on':
                 img = plate_ninja.vlp_singularity(img)
+            if dimension_pad == 'on':
+                img = img_postproc.post_padding(img)
             if augment == 'on':
                 augmenter = [plate_aug.invert_color(img), plate_aug.salt_pepper(img), plate_aug.random_resize(img),
                              plate_aug.plate_blur(img)]
                 img = random.choice(augmenter)
             if grayscale == 'on':
-                img = img_preproc.gray(img)
+                img = img_postproc.gray(img)
             cv2.imwrite(image, img)
         print('Done Postprocessing          ')
 
@@ -75,7 +79,8 @@ if __name__ == '__main__':
         # TODO: Make multithreaded if certain number of images to be generated
         # Single Thread
         generator(numbers=args.numbers, mode=args.mode, save_dir=args.save_dir, pers_trans=args.pers_trans,
-                  augment=args.augment, grayscale=args.grayscale, single_line=args.single_line)
+                  augment=args.augment, grayscale=args.grayscale, single_line=args.single_line,
+                  dimension_pad=args.dimension_pad)
     else:
         print('Destination directory exists. Please choose new directory')
 
