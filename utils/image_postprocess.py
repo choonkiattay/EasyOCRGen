@@ -10,6 +10,7 @@ class ImagePostprocess(object):
         print("Image Pre-process Engine ... Checked")
 
     def gray(self, img):
+        img = np.array(img, dtype=np.uint8)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         return gray
 
@@ -62,7 +63,9 @@ class ImagePostprocess(object):
     def check_size(self, img_w):
         if img_w < self.final_w:
             diff_w = self.final_w - img_w
-            return diff_w
+        else:
+            diff_w = img_w
+        return diff_w
 
     def post_padding(self, img):
         img_h, img_w, img_c = img.shape
